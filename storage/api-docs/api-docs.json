@@ -1,0 +1,185 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Wxapp接口说明文档",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/wxapp/index": {
+            "get": {
+                "tags": [
+                    "小程序"
+                ],
+                "summary": "首页",
+                "description": "首页",
+                "operationId": "首页",
+                "responses": {
+                    "200": {
+                        "description": "操作成功返回"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/api/wxapp/forms": {
+            "get": {
+                "tags": [
+                    "小程序"
+                ],
+                "summary": "分类列表",
+                "description": "分类列表",
+                "operationId": "分类列表",
+                "responses": {
+                    "200": {
+                        "description": "操作成功返回"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/api/wxapp/movies": {
+            "get": {
+                "tags": [
+                    "小程序"
+                ],
+                "summary": "影片列表",
+                "description": "影片列表",
+                "operationId": "影片列表",
+                "parameters": [
+                    {
+                        "name": "form",
+                        "in": "query",
+                        "description": "分类",
+                        "required": false,
+                        "schema": {
+                            "type": "numeric"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "显示条数",
+                        "required": false,
+                        "schema": {
+                            "type": "numeric"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "页码",
+                        "required": false,
+                        "schema": {
+                            "type": "numeric"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功返回"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/api/wxapp/chapter": {
+            "get": {
+                "tags": [
+                    "小程序"
+                ],
+                "summary": "影片章节列表",
+                "description": "影片章节列表",
+                "operationId": "影片章节列表",
+                "parameters": [
+                    {
+                        "name": "movies_id",
+                        "in": "query",
+                        "description": "电影id",
+                        "required": false,
+                        "schema": {
+                            "type": "numeric"
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "排序(ASC,DESC)",
+                        "required": false,
+                        "schema": {
+                            "type": "numeric"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功返回"
+                    },
+                    "422": {
+                        "description": "发生错误"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/api/wxapp/movies-info": {
+            "get": {
+                "tags": [
+                    "小程序"
+                ],
+                "summary": "影片详情",
+                "description": "影片详情",
+                "operationId": "影片详情",
+                "parameters": [
+                    {
+                        "name": "movies_id",
+                        "in": "query",
+                        "description": "电影id",
+                        "required": false,
+                        "schema": {
+                            "type": "numeric"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功返回"
+                    },
+                    "422": {
+                        "description": "发生错误"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/api/wxapp/chapter-images": {
+            "get": {
+                "tags": [
+                    "小程序"
+                ],
+                "summary": "章节图片",
+                "description": "章节图片",
+                "operationId": "章节图片",
+                "parameters": [
+                    {
+                        "name": "chapter_id",
+                        "in": "query",
+                        "description": "章节id",
+                        "required": false,
+                        "schema": {
+                            "type": "numeric"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "操作成功返回"
+                    },
+                    "422": {
+                        "description": "发生错误"
+                    }
+                },
+                "deprecated": false
+            }
+        }
+    }
+}
