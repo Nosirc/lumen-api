@@ -23,7 +23,7 @@ class FormatToResponse
                     'data'        => $content?:[],
                     'message'     => 'ok'
                 ];
-            } elseif ( is_string($content) ) {
+            } elseif ( is_null($content) || is_string($content) ) {
                 $format = [
                     'status_code' => $event->response->status(),
                     'data'        => [],

@@ -25,12 +25,10 @@ $app = new Laravel\Lumen\Application(
 
 $app->withFacades();
 
-// $app->withEloquent();
 $app->configure('api');
+$app->configure('swagger-lume');
 
 $app->withEloquent();
-
-$app->configure('swagger-lume');
 
 /*
 |--------------------------------------------------------------------------
