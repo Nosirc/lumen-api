@@ -15,8 +15,5 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\ExampleEvent' => [
             'App\Listeners\ExampleListener',
         ],
-        'Dingo\Api\Event\ResponseIsMorphing' => [
-            'App\Listeners\FormatToResponse'
-        ]
     ];
 }

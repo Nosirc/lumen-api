@@ -25,8 +25,7 @@ $app = new Laravel\Lumen\Application(
 
 $app->withFacades();
 
-$app->configure('api');
-$app->configure('swagger-lume');
+$app->configure('app');
 
 $app->withEloquent();
 
@@ -62,9 +61,9 @@ $app->singleton(
 |
 */
 
-// $app->middleware([
-//    App\Http\Middleware\ExampleMiddleware::class
-// ]);
+$app->middleware([
+    App\Http\Middleware\ResponseMiddleware::class
+ ]);
 
 // $app->routeMiddleware([
 //     'auth' => App\Http\Middleware\Authenticate::class,
@@ -82,9 +81,7 @@ $app->singleton(
 */
 
 $app->register(App\Providers\FormRequestServiceProvider::class);
-$app->register(Dingo\Api\Provider\LumenServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
-$app->register(\SwaggerLume\ServiceProvider::class);
 
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
@@ -101,10 +98,10 @@ $app->register(\SwaggerLume\ServiceProvider::class);
 |
 */
 
-$app->make('api.router')->version('v1', function($api){
-    $api->group(['namespace' => 'App\Http\Controllers'], function($api) {
-        require __DIR__.'/../routes/api.php';
-    });
+$app->router->group([
+    'namespace' => 'App\Http\Controllers'
+], function ($api) {
+    require __DIR__.'/../routes/api.php';
 });
 
 return $app;

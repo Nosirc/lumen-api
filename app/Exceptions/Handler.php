@@ -45,6 +45,19 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        if ($exception instanceof HttpException) {
+            $response['status_code'] = $exception->getStatusCode();
+            $response['message']     = $exception->getMessage();
+        } elseif ($exception instanceof ValidationException) {
+            $response['status_code'] = 422;
+            $response['message']     = $exception->errors();
+        } else {
+            $response['status_code'] = 500;
+            if (config('app.debug')) {
+                $response['message'] = $exception->getMessage();
+                $response['trace']   = array_values(explode("\n", $exception->getTraceAsString()));
+            }
+        }
+        return response($response);
     }
 }

@@ -20,7 +20,7 @@ class MoviesService
     public function __construct(Movies $movies)
     {
         $this->model = $movies;
-        $this->rank  = config('api.moviesRank');
+        $this->rank  = config('app.moviesRank');
     }
 
     /**
