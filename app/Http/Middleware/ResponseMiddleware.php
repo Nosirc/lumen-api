@@ -21,11 +21,12 @@ class ResponseMiddleware
     public function handle($request, Closure $next)
     {
         $response = $next($request);
-        if($request->segment(1) == 'app'){
+        if($request->segment(2) == 'app'){
             return response()->json(self::appResponse($response));
-        }elseif($request->segment(1) == 'wxapp'){
+        }elseif($request->segment(2) == 'wxapp'){
             return response()->json(self::wxappResponse($response));
         }
+
         return $response;
     }
 
@@ -36,17 +37,30 @@ class ResponseMiddleware
     {
         $content = $response->original;
 
-        if (!empty($content['status_code']) && $content['status_code'] != 200) {
+        if ($response->getStatusCode() != 200) {
+            $format = [
+                'status_code' => $response->getStatusCode(),
+                'data'        => (object)null,
+                'message'     => config('app.debug') ? $content : '系统错误'
+            ];
+        } elseif (!empty($content['status_code']) && $content['status_code'] != 200) {
             $format = [
                 'status_code' => $content['status_code'],
                 'data'        => (object)null,
-                'message'     => config('app.debug') ? $content['message'] : trans('api.' . $content['status_code'])
+                'message'     => (config('app.debug') && !empty($content['message'])) ? $content['message'] : trans('api.' . $content['status_code'])
             ];
             !empty($content['trace']) && $format['trace'] = $content['trace'];
         } else {
+
+            if(is_null($content)){
+                $content = (object)null;
+            }else{
+                $content = $content ? urlencode(json_encode($content)) : $content;
+            }
+
             $format = [
                 'status_code' => 200,
-                'data'        => $content ? urlencode(json_encode($content)) : $content,
+                'data'        => $content,
                 'message'     => 'SUCCESS'
             ];
         }
@@ -61,10 +75,16 @@ class ResponseMiddleware
     {
         $content = $response->original;
 
-        if (!empty($content['status_code']) && $content['status_code'] != 200) {
+        if ($response->getStatusCode() != 200) {
+            $format = [
+                'status_code' => $response->getStatusCode(),
+                'data'        => (object)null,
+                'message'     => config('app.debug') ? $content : '系统错误'
+            ];
+        } elseif (!empty($content['status_code']) && $content['status_code'] != 200) {
             $format = [
                 'status_code' => $content['status_code'],
-                'data'        => [],
+                'data'        => (object)null,
                 'message'     => (config('app.debug') && !empty($content['message'])) ? $content['message'] : trans('api.' . $content['status_code'])
             ];
             !empty($content['trace']) && $format['trace'] = $content['trace'];
@@ -72,7 +92,7 @@ class ResponseMiddleware
             $format = [
                 'status_code' => 200,
                 'data'        => $content,
-                'message'     => 'SUCCESS'
+                'message'     => 'ok'
             ];
         }
 
